@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMALITE — ECO-FLOOD 14K6</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #F5C500;
+    --yellow-hot: #FFD700;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --mid: #1c1c1c;
+    --steel: #2a2a2a;
+    --text: #e8e8e8;
+    --muted: #888;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease-out;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,197,0,0.1);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--yellow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+  .nav-cta {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border: none;
+    cursor: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--yellow-hot); transform: scale(1.03); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+    padding-top: 64px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(245,197,0,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(245,197,0,0.03) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,197,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,197,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 24px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--yellow);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 8vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .hero-title .accent { color: var(--yellow); }
+  .hero-model {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    letter-spacing: 6px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #aaa;
+    max-width: 420px;
+    margin-bottom: 48px;
+  }
+  .hero-stats {
+    display: flex; gap: 40px;
+    margin-bottom: 48px;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    cursor: none;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--yellow);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 15px 36px;
+    border: 1px solid rgba(245,197,0,0.4);
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--yellow); background: rgba(245,197,0,0.05); }
+
+  /* HERO RIGHT - Product Visual */
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 80px 60px;
+  }
+  .product-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+  .product-glow {
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(245,197,0,0.3) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.15); }
+  }
+  .product-svg-wrap {
+    position: relative;
+    z-index: 2;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-16px); }
+  }
+  /* Decorative corner tags */
+  .spec-tag {
+    position: absolute;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    background: rgba(245,197,0,0.08);
+    border: 1px solid rgba(245,197,0,0.25);
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+  .spec-tag::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--yellow);
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-1 { top: 5%; right: 0; }
+  .tag-2 { top: 35%; left: -10%; }
+  .tag-3 { bottom: 20%; right: 0; }
+  .tag-4 { bottom: 5%; left: 5%; }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid rgba(245,197,0,0.15);
+    border-bottom: 1px solid rgba(245,197,0,0.15);
+    overflow: hidden;
+    padding: 16px 0;
+    background: rgba(245,197,0,0.03);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .marquee-item span { color: var(--yellow); margin-right: 60px; }
+
+  /* SPECS SECTION */
+  .specs-section {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(245,197,0,0.2);
+    max-width: 60px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .section-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #999;
+    margin-bottom: 40px;
+  }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .spec-row {
+    padding: 16px 20px;
+    background: var(--mid);
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .spec-row:hover { border-left-color: var(--yellow); background: var(--steel); }
+  .spec-key {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .spec-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* LIGHT BEAM VISUAL */
+  .specs-visual {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .beam-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+  .beam-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(245,197,0,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: ring-pulse 3s ease-in-out infinite;
+  }
+  .beam-ring:nth-child(1) { width: 100%; height: 100%; animation-delay: 0s; }
+  .beam-ring:nth-child(2) { width: 130%; height: 130%; animation-delay: 0.5s; }
+  .beam-ring:nth-child(3) { width: 165%; height: 165%; animation-delay: 1s; }
+  .beam-ring:nth-child(4) { width: 200%; height: 200%; animation-delay: 1.5s; }
+  @keyframes ring-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; border-color: rgba(245,197,0,0.4); }
+  }
+  .beam-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(245,197,0,0.9) 0%, rgba(245,197,0,0.3) 50%, transparent 70%);
+    border-radius: 50%;
+    animation: core-glow 2s ease-in-out infinite alternate;
+  }
+  @keyframes core-glow {
+    from { transform: translate(-50%,-50%) scale(0.9); opacity: 0.7; }
+    to { transform: translate(-50%,-50%) scale(1.1); opacity: 1; }
+  }
+  .lumen-label {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .lumen-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .lumen-unit {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ACCESSORIES */
+  .accessories-section {
+    padding: 100px 80px;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .accessories-section::before {
+    content: 'ACCESSORIES';
+    position: absolute;
+    right: -40px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 140px;
+    letter-spacing: 20px;
+    color: rgba(245,197,0,0.03);
+    white-space: nowrap;
+  }
+  .accessories-header {
+    max-width: 1240px;
+    margin: 0 auto 60px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .acc-grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .acc-card {
+    background: var(--mid);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, background 0.3s;
+    cursor: none;
+  }
+  .acc-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .acc-card:hover { background: var(--steel); transform: translateY(-4px); }
+  .acc-card:hover::after { transform: scaleX(1); }
+  .acc-icon {
+    width: 64px; height: 64px;
+    background: rgba(245,197,0,0.08);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    font-size: 28px;
+  }
+  .acc-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .acc-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+  .acc-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    padding: 120px 80px;
+    position: relative;
+  }
+  .testimonials-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 80px; right: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,197,0,0.3), transparent);
+  }
+  .testimonials-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .testimonial-card {
+    background: var(--mid);
+    padding: 40px;
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(245,197,0,0.07);
+    position: absolute;
+    top: -20px; left: 24px;
+    line-height: 1;
+  }
+  .stars { color: var(--yellow); margin-bottom: 20px; font-size: 14px; letter-spacing: 2px; }
+  .testimonial-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #bbb;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .testimonial-role {
+    font-size: 12px;
+    color: var(--yellow);
+    letter-spacing: 1px;
+  }
+
+  /* GALLERY */
+  .gallery-section {
+    padding: 100px 80px;
+    background: var(--dark);
+  }
+  .gallery-header {
+    max-width: 1240px;
+    margin: 0 auto 48px;
+  }
+  .gallery-grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-thumb {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    transition: transform 0.5s;
+    background: var(--mid);
+    position: relative;
+  }
+  .gallery-item:hover .gallery-thumb { transform: scale(1.08); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: rgba(245,197,0,0);
+    transition: background 0.3s;
+    display: flex; align-items: flex-end;
+    padding: 20px;
+  }
+  .gallery-item:hover .gallery-overlay { background: rgba(245,197,0,0.12); }
+  .gallery-caption {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+  /* Gallery placeholder scenes */
+  .scene { font-size: 48px; filter: grayscale(80%) brightness(0.5); }
+  .scene:hover { filter: grayscale(0%) brightness(0.7); }
+
+  /* ENQUIRY */
+  .enquiry-section {
+    padding: 120px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .enquiry-section::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,197,0,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .enquiry-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .enquiry-info { }
+  .enquiry-contact {
+    margin-top: 48px;
+  }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: rgba(245,197,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .contact-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .contact-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-input, .form-select, .form-textarea {
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(245,197,0,0.5);
+    background: var(--steel);
+  }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-select { cursor: none; }
+  .form-select option { background: var(--dark); }
+
+  /* RELATED PRODUCTS */
+  .related-section {
+    padding: 100px 80px;
+    background: var(--dark);
+  }
+  .related-header {
+    max-width: 1240px; margin: 0 auto 60px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .related-grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .product-card {
+    background: var(--mid);
+    padding: 32px;
+    transition: transform 0.3s, background 0.3s;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--yellow), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .product-card:hover { background: var(--steel); transform: translateY(-6px); }
+  .product-card:hover::before { transform: scaleX(1); }
+  .product-img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+    margin-bottom: 24px;
+    background: rgba(245,197,0,0.04);
+  }
+  .product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .product-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .product-spec {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .product-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .product-link::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .product-card:hover .product-link::after { transform: translateX(4px); }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 80px 80px 40px;
+    border-top: 1px solid rgba(245,197,0,0.1);
+  }
+  .footer-grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 240px;
+  }
+  .social-links { display: flex; gap: 12px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: var(--mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    cursor: none;
+  }
+  .social-btn:hover { background: var(--yellow); color: var(--black); }
+  .footer-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--yellow); }
+  .footer-bottom {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+  }
+  .footer-certifications {
+    display: flex; gap: 16px;
+  }
+  .cert-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--yellow);
+    z-index: 200;
+    transform-origin: left;
+    transition: width 0.1s;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 24px 40px; }
+    .hero-right { padding: 40px 24px 60px; display: none; }
+    .specs-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .accessories-section { padding: 60px 24px; }
+    .acc-grid { grid-template-columns: 1fr; }
+    .testimonials-section { padding: 60px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .gallery-section { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+    .enquiry-section { padding: 60px 24px; }
+    .enquiry-inner { grid-template-columns: 1fr; gap: 48px; }
+    .related-section { padding: 60px 24px; }
+    .related-grid { grid-template-columns: 1fr 1fr; }
+    footer { padding: 60px 24px 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    body { cursor: default; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SAMA<span>LITE</span></a>
+  <ul class="nav-links">
+    <li><a href="#specs">Specifications</a></li>
+    <li><a href="#accessories">Accessories</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#enquiry">Enquire</a></li>
+  </ul>
+  <button class="nav-cta">Get a Quote</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">Eco-Friendly Portable Lighting</div>
+    <h1 class="hero-title">
+      ECO<br>
+      <span class="accent">FLOOD</span>
+    </h1>
+    <p class="hero-model">14K6 SERIES</p>
+    <p class="hero-desc">
+      Next-generation portable site lighting engineered for demanding environments.
+      Solar-assisted, battery-powered — delivering professional-grade illumination
+      where the grid can't reach.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">14K</div>
+        <div class="stat-label">Lumens Output</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">360°</div>
+        <div class="stat-label">Coverage</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">IP65</div>
+        <div class="stat-label">Weatherproof</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Enquire Now</button>
+      <button class="btn-secondary" onclick="document.getElementById('specs').scrollIntoView({behavior:'smooth'})">View Specs</button>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="product-showcase">
+      <div class="product-glow"></div>
+      <div class="product-svg-wrap">
+        <!-- SVG representation of the flood light -->
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+          <!-- Light beams -->
+          <defs>
+            <radialGradient id="lightGlow" cx="50%" cy="30%" r="50%">
+              <stop offset="0%" stop-color="#F5C500" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#F5C500" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="bodyGrad" cx="50%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#3a3a3a"/>
+              <stop offset="100%" stop-color="#1a1a1a"/>
+            </radialGradient>
+          </defs>
+          <!-- Beam rays -->
+          <g opacity="0.4">
+            <line x1="200" y1="80" x2="200" y2="0" stroke="#F5C500" stroke-width="1" opacity="0.3"/>
+            <line x1="200" y1="80" x2="280" y2="20" stroke="#F5C500" stroke-width="1" opacity="0.25"/>
+            <line x1="200" y1="80" x2="120" y2="20" stroke="#F5C500" stroke-width="1" opacity="0.25"/>
+            <line x1="200" y1="80" x2="340" y2="60" stroke="#F5C500" stroke-width="1" opacity="0.15"/>
+            <line x1="200" y1="80" x2="60" y2="60" stroke="#F5C500" stroke-width="1" opacity="0.15"/>
+          </g>
+          <!-- Glow circle -->
+          <ellipse cx="200" cy="90" rx="70" ry="50" fill="url(#lightGlow)" opacity="0.6"/>
+          <!-- Main light head -->
+          <rect x="120" y="80" width="160" height="90" rx="8" fill="url(#bodyGrad)" stroke="#2a2a2a" stroke-width="1"/>
+          <!-- LED array -->
+          <g fill="#F5C500">
+            <rect x="132" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="152" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="172" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="192" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="212" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="232" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="252" y="92" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="132" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="152" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="172" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="192" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="212" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="232" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="252" y="112" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="132" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="152" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="172" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="192" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="212" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="232" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+            <rect x="252" y="132" width="16" height="16" rx="3" opacity="0.9"/>
+          </g>
+          <!-- Arm / mast -->
+          <rect x="192" y="170" width="16" height="70" fill="#222"/>
+          <!-- Telescoping sections -->
+          <rect x="188" y="190" width="24" height="8" rx="2" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+          <rect x="186" y="210" width="28" height="8" rx="2" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+          <!-- Battery / base unit -->
+          <rect x="130" y="240" width="140" height="80" rx="6" fill="#F5C500"/>
+          <rect x="138" y="248" width="124" height="64" rx="4" fill="#D4A800"/>
+          <!-- SAMALITE text on base -->
+          <text x="200" y="286" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="18" fill="#000" letter-spacing="3">SAMALITE</text>
+          <text x="200" y="300" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-size="10" fill="#555" letter-spacing="2">ECO-FLOOD 14K6</text>
+          <!-- Handle detail -->
+          <rect x="175" y="242" width="50" height="6" rx="3" fill="#B8900A"/>
+          <!-- Wheels hint -->
+          <circle cx="155" cy="325" r="12" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+          <circle cx="245" cy="325" r="12" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+          <circle cx="155" cy="325" r="5" fill="#2a2a2a"/>
+          <circle cx="245" cy="325" r="5" fill="#2a2a2a"/>
+          <!-- Ground shadow -->
+          <ellipse cx="200" cy="338" rx="70" ry="10" fill="rgba(0,0,0,0.3)"/>
+        </svg>
+      </div>
+      <span class="spec-tag tag-1">14,000 Lm Output</span>
+      <span class="spec-tag tag-2">IP65 Rated</span>
+      <span class="spec-tag tag-3">Solar Ready</span>
+      <span class="spec-tag tag-4">Battery Powered</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">ECO-FLOOD 14K6 <span>★</span></div>
+    <div class="marquee-item">PORTABLE LIGHTING <span>★</span></div>
+    <div class="marquee-item">14,000 LUMENS <span>★</span></div>
+    <div class="marquee-item">SOLAR ASSISTED <span>★</span></div>
+    <div class="marquee-item">IP65 WEATHERPROOF <span>★</span></div>
+    <div class="marquee-item">CONSTRUCTION GRADE <span>★</span></div>
+    <div class="marquee-item">EMERGENCY LIGHTING <span>★</span></div>
+    <div class="marquee-item">BRITISH MADE <span>★</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item">ECO-FLOOD 14K6 <span>★</span></div>
+    <div class="marquee-item">PORTABLE LIGHTING <span>★</span></div>
+    <div class="marquee-item">14,000 LUMENS <span>★</span></div>
+    <div class="marquee-item">SOLAR ASSISTED <span>★</span></div>
+    <div class="marquee-item">IP65 WEATHERPROOF <span>★</span></div>
+    <div class="marquee-item">CONSTRUCTION GRADE <span>★</span></div>
+    <div class="marquee-item">EMERGENCY LIGHTING <span>★</span></div>
+    <div class="marquee-item">BRITISH MADE <span>★</span></div>
+  </div>
+</div>
+
+<!-- SPECS SECTION -->
+<section class="specs-section" id="specs">
+  <div>
+    <p class="section-label reveal">Product Information</p>
+    <h2 class="section-title reveal">TECHNICAL<br><span style="color:var(--yellow)">SPECS</span></h2>
+    <p class="section-body reveal">
+      Engineered to replace 2–4 traditional 1000W halogen tower lights,
+      the ECO-FLOOD 14K6 delivers exceptional efficiency without compromising
+      on output. Designed for harsh conditions, rapid deployment, and extended runtime.
+    </p>
+    <div class="spec-grid reveal">
+      <div class="spec-row">
+        <div class="spec-key">Luminaire Output</div>
+        <div class="spec-val">14,000 lm</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">System Wattage</div>
+        <div class="spec-val">140W LED</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Lumen Efficacy</div>
+        <div class="spec-val">100 lm/W</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Battery Capacity</div>
+        <div class="spec-val">2.2 kWh</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Weight</div>
+        <div class="spec-val">42 kg</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Ingress Protection</div>
+        <div class="spec-val">IP65</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Recharge Time</div>
+        <div class="spec-val">4–5 hours</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Run Time</div>
+        <div class="spec-val">Up to 10 hrs</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Colour Temperature</div>
+        <div class="spec-val">5000K</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Operating Temp</div>
+        <div class="spec-val">−10°C to 40°C</div>
+      </div>
+    </div>
+  </div>
+  <div class="specs-visual reveal">
+    <div class="beam-container">
+      <div class="beam-ring"></div>
+      <div class="beam-ring"></div>
+      <div class="beam-ring"></div>
+      <div class="beam-ring"></div>
+      <div class="beam-core"></div>
+    </div>
+    <div class="lumen-label">
+      <div class="lumen-num" id="lumenCounter">0</div>
+      <div class="lumen-unit">Lumens</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESSORIES -->
+<section class="accessories-section" id="accessories">
+  <div class="accessories-header">
+    <div>
+      <p class="section-label reveal">Optional Add-Ons</p>
+      <h2 class="section-title reveal" style="font-size: clamp(40px,4vw,60px)">ACCESSORIES</h2>
+    </div>
+    <p style="color:var(--muted); font-size:14px; max-width:300px; text-align:right;" class="reveal">
+      Expand capability with purpose-built accessories designed for the ECO-FLOOD ecosystem.
+    </p>
+  </div>
+  <div class="acc-grid">
+    <div class="acc-card reveal reveal-delay-1">
+      <div class="acc-icon">🎣</div>
+      <div class="acc-name">Canvas Holdall</div>
+      <div class="acc-code">H4250</div>
+      <div class="acc-desc">Heavy-duty canvas carry bag with reinforced handles. Purpose-built for secure transport and storage of the ECO-FLOOD system.</div>
+    </div>
+    <div class="acc-card reveal reveal-delay-2">
+      <div class="acc-icon">📦</div>
+      <div class="acc-name">Storage Case</div>
+      <div class="acc-code">H4511</div>
+      <div class="acc-desc">Robust fibrecalass storage case with custom foam insert. IP54-rated protection for transport in demanding site conditions.</div>
+    </div>
+    <div class="acc-card reveal reveal-delay-3">
+      <div class="acc-icon">🔧</div>
+      <div class="acc-name">Remote Mount Bracket</div>
+      <div class="acc-code">H4515</div>
+      <div class="acc-desc">Telescoping remote storage bracket enabling flexible deployment configurations. Adjustable height from 1–4 metres.</div>
+    </div>
+    <div class="acc-card reveal reveal-delay-1">
+      <div class="acc-icon">📡</div>
+      <div class="acc-name">Tripod Stand</div>
+      <div class="acc-code">TS35B</div>
+      <div class="acc-desc">Professional-grade aluminium tripod stand with secure mount. Rated for outdoor use in winds up to 40 mph.</div>
+    </div>
+    <div class="acc-card reveal reveal-delay-2">
+      <div class="acc-icon">🔋</div>
+      <div class="acc-name">Vehicle Charger</div>
+      <div class="acc-code">PCU-MK2</div>
+      <div class="acc-desc">12V/24V DC vehicle charger for on-the-road battery replenishment. Compatible with all Samalite battery units.</div>
+    </div>
+    <div class="acc-card reveal reveal-delay-3">
+      <div class="acc-icon">☀️</div>
+      <div class="acc-name">Solar Panel Kit</div>
+      <div class="acc-code">SP-200</div>
+      <div class="acc-desc">200W foldable solar panel kit for autonomous off-grid operation. Includes MC4 connectors and weather-resistant cabling.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <p class="section-label reveal">What Clients Say</p>
+    <h2 class="section-title reveal">TESTIMONIALS</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          The ECO-FLOOD completely transformed our night operations. Setup takes minutes and the output is genuinely impressive — we replaced four of our halogen towers with two of these units.
+        </p>
+        <div class="testimonial-author">David Dorree</div>
+        <div class="testimonial-role">Site Manager, Network Rail</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          Outstanding performance on our emergency response deployments. The battery runtime is exceptional and solar charging kept us self-sufficient for the entire operation duration.
+        </p>
+        <div class="testimonial-author">Jonathan Hale</div>
+        <div class="testimonial-role">Operations Director, Civil Defence</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          Robust, reliable, and genuinely eco-conscious. The carbon reduction versus traditional generators is measurable and our clients noticed immediately. Best investment this year.
+        </p>
+        <div class="testimonial-author">Sarah Whitmore</div>
+        <div class="testimonial-role">Procurement Lead, Highways England</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <p class="section-label reveal">In the Field</p>
+    <h2 class="section-title reveal">PRODUCT<br>GALLERY</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);">
+        <div class="scene">🏗️</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Railway Works · Night Ops</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);">
+        <div class="scene">🌉</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Bridge Maintenance</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);">
+        <div class="scene">🚧</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Roadworks · A1</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);">
+        <div class="scene">⚡</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Emergency Response</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #161616 0%, #111 100%);">
+        <div class="scene">🏚️</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Demolition Site</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #0d0d0d 0%, #1c1c1c 100%);">
+        <div class="scene">🌃</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Urban Construction</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb" style="background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);">
+        <div class="scene">🏕️</div>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Event Lighting</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRY -->
+<section class="enquiry-section" id="enquiry">
+  <div class="enquiry-inner">
+    <div>
+      <p class="section-label reveal">Get in Touch</p>
+      <h2 class="section-title reveal">ENQUIRE<br><span style="color:var(--yellow)">TODAY</span></h2>
+      <p class="section-body reveal">
+        Our technical sales team will provide tailored product advice,
+        custom quotations, and logistics support for your project.
+      </p>
+      <div class="enquiry-contact">
+        <div class="contact-item reveal">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Address</div>
+            <div class="contact-value">Samalite Ltd, Unit 4 Bloxham, Banbury, Oxfordshire, OX15 4FS</div>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Office Hours</div>
+            <div class="contact-value">Mon–Fri 08:00–17:30 GMT · 24hr Emergency Line Available</div>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">+44 (0) 1295 XXX XXX</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Surname</label>
+          <input class="form-input" type="text" placeholder="Smith">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Company Name</label>
+          <input class="form-input" type="text" placeholder="Acme Construction Ltd">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="john@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Product Interest</label>
+          <select class="form-select">
+            <option value="">Select Product</option>
+            <option>ECO-FLOOD 14K6</option>
+            <option>ECO-FLOOD Sport</option>
+            <option>ECO-FLOOD 770</option>
+            <option>ECO-FLOOD 7708</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input class="form-input" type="number" placeholder="1" min="1">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Please describe your application and any specific requirements..."></textarea>
+        </div>
+        <div class="full">
+          <button class="btn-primary" style="width:100%; padding: 18px;" onclick="handleSubmit()">Submit Enquiry →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED PRODUCTS -->
+<section class="related-section">
+  <div class="related-header">
+    <div>
+      <p class="section-label reveal">Also From Samalite</p>
+      <h2 class="section-title reveal" style="font-size: clamp(40px,4vw,60px)">RELATED<br>PRODUCTS</h2>
+    </div>
+  </div>
+  <div class="related-grid">
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img">💡</div>
+      <div class="product-name">ECO-FLOOD</div>
+      <div class="product-sub">770 Series</div>
+      <div class="product-spec">7,700 Lm · 70W · IP65 · Compact</div>
+      <a href="#" class="product-link">View Product</a>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img">🔦</div>
+      <div class="product-name">ECO-FLOOD</div>
+      <div class="product-sub">7708 Series</div>
+      <div class="product-spec">7,700 Lm · Dual Head · 360° Mount</div>
+      <a href="#" class="product-link">View Product</a>
+    </div>
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-img">⚡</div>
+      <div class="product-name">ECO-FLOOD</div>
+      <div class="product-sub">Sport</div>
+      <div class="product-spec">5,000 Lm · Ultra Portable · 12 kg</div>
+      <a href="#" class="product-link">View Product</a>
+    </div>
+    <div class="product-card reveal reveal-delay-4">
+      <div class="product-img">🌅</div>
+      <div class="product-name">SOLAR</div>
+      <div class="product-sub">Tower Pro</div>
+      <div class="product-spec">6M Tower · CCTV Ready · Autonomous</div>
+      <a href="#" class="product-link">View Product</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">SAMALITE</div>
+      <p class="footer-tagline">
+        The UK's leading independent designer and manufacturer of portable lighting equipment for industry, emergency services, and events.
+      </p>
+      <div class="social-links">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">▶</a>
+        <a href="#" class="social-btn">📘</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Products</div>
+      <ul class="footer-links">
+        <li><a href="#">Floodlights</a></li>
+        <li><a href="#">Tower Lights</a></li>
+        <li><a href="#">Solar Systems</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Emergency Kit</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#">About Samalite</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Technical Docs</a></li>
+        <li><a href="#">Download Catalogue</a></li>
+        <li><a href="#">News & Updates</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links">
+        <li><a href="#">Help & FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Repair Services</a></li>
+        <li><a href="#">Warranty Info</a></li>
+        <li><a href="#">Returns</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Sign Up</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">
+        Receive product launches, industry news, and exclusive discounts.
+      </p>
+      <input class="form-input" type="email" placeholder="your@email.com" style="width:100%; margin-bottom:8px;">
+      <button class="btn-primary" style="width:100%; padding:12px;">Subscribe</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2024 Samalite Ltd. All rights reserved. Registered in England & Wales.</p>
+    <div class="footer-certifications">
+      <span class="cert-badge">CE Marked</span>
+      <span class="cert-badge">ISO 9001</span>
+      <span class="cert-badge">ATEX</span>
+      <span class="cert-badge">British Made</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+    });
+  });
+
+  // Scroll progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    progress.style.width = scrolled + '%';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Lumen counter animation
+  function animateCounter(el, target, duration) {
+    const start = performance.now();
+    function update(time) {
+      const elapsed = time - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const lumenEl = document.getElementById('lumenCounter');
+  const lumenObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateCounter(lumenEl, 14000, 2000);
+      lumenObserver.disconnect();
+    }
+  }, { threshold: 0.5 });
+  lumenObserver.observe(lumenEl);
+
+  // Form submission
+  function handleSubmit() {
+    const btn = event.target;
+    btn.textContent = '✓ Enquiry Submitted!';
+    btn.style.background = '#22c55e';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = 'Submit Enquiry →';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 3000);
+  }
+
+  // Parallax hero grid
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelector('.hero-grid').style.transform = `translateY(${scrollY * 0.15}px)`;
+  });
+</script>
+</body>
+</html>
